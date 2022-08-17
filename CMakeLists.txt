@@ -14,4 +14,6 @@ add_library(ThreadNamingUtils
 target_include_directories(ThreadNamingUtils
     PUBLIC
         ${PROJECT_SOURCE_DIR}
+    PRIVATE
+        ${PROJECT_SOURCE_DIR}/ThreadNamingUtils
 )
