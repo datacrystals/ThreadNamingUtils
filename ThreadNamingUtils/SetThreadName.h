@@ -1,4 +1,5 @@
-// Simple thread name helper lib
+// Simple library to help manage thread names
+
 #pragma once
 
 #include <string>
@@ -6,9 +7,6 @@
 
 
 // Based off of: https://stackoverflow.com/questions/10121560/stdthread-naming-your-thread
-
-
-
 #ifdef _WIN32
 #include <windows.h>
 const DWORD MS_VC_EXCEPTION=0x406D1388;
