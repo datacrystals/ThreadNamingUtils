@@ -22,10 +22,14 @@ const DWORD MS_VC_EXCEPTION=0x406D1388;
 void SetThreadName(uint32_t dwThreadID, std::string ThreadName) {
     SetThreadName(dwThreadID, ThreadName.c_str());
 }
+void SetThreadName(std::string ThreadName) {
+    SetThreadName(ThreadName.c_str());
+}
+void SetThreadName(const char* ThreadName) {
+    DWORD dwThreadID = ::GetThreadId( static_cast<HANDLE>( t.native_handle() ) );
+    SetThreadName(dwThreadID, ThreadName)
+}
 void SetThreadName(uint32_t dwThreadID, const char* ThreadName) {
-
-    // DWORD dwThreadID = ::GetThreadId( static_cast<HANDLE>( t.native_handle() ) );
-
     THREADNAME_INFO Info;
     Info.dwType     = 0x1000;
     Info.szName     = ThreadName;
@@ -38,12 +42,12 @@ void SetThreadName(uint32_t dwThreadID, const char* ThreadName) {
     __except(EXCEPTION_EXECUTE_HANDLER) {
     }
 }
-void SetThreadName( const char* ThreadName)
+void SetThreadName(const char* ThreadName)
 {
     SetThreadName(GetCurrentThreadId(),ThreadName);
 }
 
-void SetThreadName( std::thread* thread, const char* ThreadName)
+void SetThreadName(std::thread* thread, const char* ThreadName)
 {
     DWORD threadId = ::GetThreadId( static_cast<HANDLE>( thread->native_handle() ) );
     SetThreadName(threadId,ThreadName);
@@ -51,7 +55,7 @@ void SetThreadName( std::thread* thread, const char* ThreadName)
 
 #elif defined(__linux__)
 #include <sys/prctl.h>
-void SetThreadName( const char* ThreadName)
+void SetThreadName(const char* ThreadName)
 {
 prctl(PR_SET_NAME,ThreadName,0,0,0);
 }
