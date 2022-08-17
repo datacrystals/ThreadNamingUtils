@@ -61,8 +61,10 @@ prctl(PR_SET_NAME,ThreadName,0,0,0);
 }
 
 #else
-void SetThreadName(std::thread* thread, const char* ThreadName)
-{
+void SetThreadName(std::string ThreadName) {
+    SetThreadName(ThreadName.c_str());
+}
+void SetThreadName(std::thread* thread, const char* ThreadName) {
 auto handle = thread->native_handle();
 pthread_setname_np(handle,ThreadName);
 }
